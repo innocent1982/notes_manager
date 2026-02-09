@@ -3,3 +3,4 @@ __init__.py
 migrations/
 manage.py
 __pycache__
+db.sqlite3
