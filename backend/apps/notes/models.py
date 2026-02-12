@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.utils.http import MAX_HEADER_LENGTH
 
 User = get_user_model()
 
@@ -12,9 +13,9 @@ class Course(models.Model):
 
 
 class Lecture(models.Model):
-    id = models.IntegerField(primary_key=True)
     number = models.PositiveIntegerField(unique=True)
     file = models.FileField(upload_to="media/notes")
     uploaded_at = models.DateTimeField(blank=True)
     edited_at = models.DateTimeField(blank=True, null=True)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
