@@ -11,6 +11,7 @@ from apps.notes.models import Course
 from apps.notes.services.course_services.create_course import CreateCourse
 from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 
 
 class CourseView(
@@ -23,7 +24,15 @@ class CourseView(
     serializer_class = CourseSerializer
     lookup_field = "id"
 
+    def get_permissions(self):
+        if self.request.method == "POST":
+            return [IsAuthenticated()]
+        elif self.request.method == "GET":
+            return [IsAuthenticatedOrReadOnly()]
+
     def get_queryset(self):
+        if self.request.user:
+            return Course.objects.filter(users=self.request.user)
         return Course.objects.all()
 
     def get_object(self):

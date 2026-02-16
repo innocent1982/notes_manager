@@ -18,4 +18,4 @@ class Lecture(models.Model):
     uploaded_at = models.DateTimeField(blank=True)
     edited_at = models.DateTimeField(blank=True, null=True)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, default=None, on_delete=models.CASCADE)

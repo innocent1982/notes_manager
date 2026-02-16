@@ -2,7 +2,10 @@ from shutil import register_archive_format
 from rest_framework import serializers
 from .models import Course
 from .models import Lecture
-from utils.utility_serializers import UtilityCourseSerializer, UtilityUserSerializer
+from apps.notes.utils.utility_serializers import (
+    UtilityCourseSerializer,
+    UtilityUserSerializer,
+)
 
 
 class CourseSerializer(serializers.ModelSerializer):
@@ -16,7 +19,7 @@ class CourseSerializer(serializers.ModelSerializer):
         return serializers.ValidationError("Course name must be string")
 
 
-class LectureSerializer(serializers, serializers.ModelSerializer):
+class LectureSerializer(serializers.ModelSerializer):
     course = UtilityCourseSerializer(read_only=True)
     user = UtilityUserSerializer(read_only=True)
 
